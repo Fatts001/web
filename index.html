@@ -28,8 +28,10 @@ body {
 .card {
     position: relative;
     z-index: 10;
-    width: min(90%, 430px);
-    padding: 35px 25px;
+    width: min(92%, 440px);
+    max-height: 94vh;
+    overflow-y: auto;
+    padding: 30px 22px;
     text-align: center;
     border-radius: 28px;
     background: rgba(255,255,255,.45);
@@ -56,12 +58,8 @@ body {
 }
 
 @keyframes floating {
-    0%,100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 h1 {
@@ -70,7 +68,7 @@ h1 {
     font-size: 30px;
 }
 
-p {
+.intro {
     margin: 0 0 25px;
     color: #765d7e;
 }
@@ -111,7 +109,7 @@ button {
 /* RESULT */
 #result {
     display: none;
-    margin-top: 25px;
+    margin-top: 22px;
     animation: resultIn .8s ease;
 }
 
@@ -126,35 +124,77 @@ button {
     }
 }
 
+/* GALERI */
+.gallery {
+    position: relative;
+    width: 100%;
+    max-width: 330px;
+    margin: auto;
+    touch-action: pan-y;
+}
+
 .photo {
     width: 100%;
-    max-width: 300px;
-    max-height: 300px;
+    height: 300px;
     object-fit: cover;
     border-radius: 20px;
     border: 5px solid rgba(255,255,255,.8);
     box-shadow: 0 15px 35px rgba(80,50,80,.25);
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* PANAH */
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,.75);
+    color: #70466f;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,.15);
+}
+
+.arrow:hover {
+    transform: translateY(-50%) scale(1.1);
+}
+
+#prev {
+    left: -18px;
+}
+
+#next {
+    right: -18px;
+}
+
+/* NOMOR FOTO */
+.photoCounter {
+    margin-top: 10px;
+    color: #765d7e;
+    font-size: 14px;
 }
 
 .love-text {
-    margin-top: 15px;
+    margin-top: 12px;
     color: #633d69;
-    font-size: 21px;
+    font-size: 20px;
     font-weight: bold;
 }
 
-/* SURAT BUTTON */
+/* SURAT */
 #letterBtn {
     margin-top: 18px;
     background: linear-gradient(135deg, #9b6cff, #d05cff);
     color: white;
 }
 
-#letterBtn:hover {
-    transform: translateY(-3px) scale(1.04);
-}
-
-/* OVERLAY SURAT */
 #letterOverlay {
     position: fixed;
     inset: 0;
@@ -167,7 +207,6 @@ button {
     padding: 20px;
 }
 
-/* SURAT */
 .letter {
     position: relative;
     width: min(92vw, 420px);
@@ -192,7 +231,6 @@ button {
 .letter h2 {
     margin-top: 0;
     color: #70466f;
-    font-size: 28px;
 }
 
 .letter p {
@@ -203,13 +241,13 @@ button {
 }
 
 .closeLetter {
-    margin-top: 15px;
+    margin-top: 10px;
     background: #765d7e;
     color: white;
     padding: 10px 22px;
 }
 
-/* FLOWERS */
+/* BUNGA */
 .flower {
     position: fixed;
     top: 110%;
@@ -267,29 +305,37 @@ button {
         transform: scale(.3);
         opacity: .2;
     }
-
     50% {
         transform: scale(1.5);
         opacity: 1;
     }
 }
 
+/* HP */
 @media (max-width: 500px) {
+
     .card {
-        padding: 30px 20px;
+        padding: 25px 18px;
     }
 
     h1 {
-        font-size: 26px;
+        font-size: 25px;
     }
 
     .emoji {
         font-size: 48px;
     }
 
-    button {
-        padding: 12px 24px;
-        font-size: 16px;
+    .photo {
+        height: 280px;
+    }
+
+    #prev {
+        left: -10px;
+    }
+
+    #next {
+        right: -10px;
     }
 }
 </style>
@@ -297,29 +343,47 @@ button {
 
 <body>
 
-<!-- BACKGROUND -->
+<!-- SPARKLE -->
 <div class="sparkle" style="left:10%;top:15%;animation-delay:.2s"></div>
 <div class="sparkle" style="left:80%;top:20%;animation-delay:.8s"></div>
 <div class="sparkle" style="left:25%;top:75%;animation-delay:1.2s"></div>
 <div class="sparkle" style="left:90%;top:70%;animation-delay:.5s"></div>
 
-<!-- MAIN CARD -->
+<!-- CARD -->
 <div class="card">
 
     <div class="emoji">🌸</div>
 
     <h1>Mau lihat sesuatu? 👀</h1>
 
-    <p>Jawab dengan jujur yaa...</p>
+    <p class="intro">Jawab dengan jujur yaa...</p>
 
     <div class="buttons">
         <button id="yes">YA 💗</button>
         <button id="no">TIDAK 🙈</button>
     </div>
 
+    <!-- HASIL -->
     <div id="result">
 
-        <img src="foto.jpg" class="photo" alt="Foto">
+        <!-- GALERI -->
+        <div class="gallery" id="gallery">
+
+            <img
+                id="photo"
+                class="photo"
+                src="foto.jpg"
+                alt="Foto"
+            >
+
+            <button class="arrow" id="prev">‹</button>
+            <button class="arrow" id="next">›</button>
+
+        </div>
+
+        <div class="photoCounter">
+            Foto <span id="current">1</span> dari <span id="total">4</span>
+        </div>
 
         <div class="love-text">
             🌷 Nih buat kamu 🌷
@@ -330,6 +394,7 @@ button {
         </button>
 
     </div>
+
 </div>
 
 
@@ -345,7 +410,7 @@ button {
         </p>
 
         <p>
-            Aku cuma mau bilang sesuatu yang mungkin sederhana,
+            Aku cuma mau bilang sesuatu yang sederhana,
             tapi semoga bisa bikin kamu tersenyum hari ini. 🌷
         </p>
 
@@ -376,13 +441,40 @@ button {
 
 <script>
 
+/* =========================
+   ELEMENT
+========================= */
+
 const yes = document.getElementById("yes");
 const no = document.getElementById("no");
 const result = document.getElementById("result");
 
+const photo = document.getElementById("photo");
+const prev = document.getElementById("prev");
+const next = document.getElementById("next");
+
+const current = document.getElementById("current");
+const total = document.getElementById("total");
+
 const letterBtn = document.getElementById("letterBtn");
 const letterOverlay = document.getElementById("letterOverlay");
 const closeLetter = document.getElementById("closeLetter");
+
+
+/* =========================
+   DAFTAR FOTO
+========================= */
+
+const photos = [
+    "foto.jpg",
+    "foto2.jpg",
+    "foto3.jpg",
+    "foto4.jpg"
+];
+
+let photoIndex = 0;
+
+total.textContent = photos.length;
 
 
 /* =========================
@@ -396,11 +488,85 @@ yes.addEventListener("click", function() {
     yes.style.display = "none";
     no.style.display = "none";
 
-    // Bunga beterbangan
     for (let i = 0; i < 50; i++) {
         setTimeout(createFlower, i * 70);
     }
+
 });
+
+
+/* =========================
+   GANTI FOTO
+========================= */
+
+function showPhoto(index) {
+
+    photoIndex = index;
+
+    if (photoIndex < 0) {
+        photoIndex = photos.length - 1;
+    }
+
+    if (photoIndex >= photos.length) {
+        photoIndex = 0;
+    }
+
+    photo.style.opacity = "0";
+
+    setTimeout(() => {
+
+        photo.src = photos[photoIndex];
+
+        photo.style.opacity = "1";
+
+        current.textContent = photoIndex + 1;
+
+    }, 120);
+
+}
+
+next.addEventListener("click", function() {
+    showPhoto(photoIndex + 1);
+});
+
+prev.addEventListener("click", function() {
+    showPhoto(photoIndex - 1);
+});
+
+
+/* =========================
+   SWIPE HP
+========================= */
+
+let startX = 0;
+let endX = 0;
+
+const gallery = document.getElementById("gallery");
+
+gallery.addEventListener("touchstart", function(e) {
+
+    startX = e.touches[0].clientX;
+
+}, { passive: true });
+
+
+gallery.addEventListener("touchend", function(e) {
+
+    endX = e.changedTouches[0].clientX;
+
+    const difference = endX - startX;
+
+    if (Math.abs(difference) > 50) {
+
+        if (difference < 0) {
+            showPhoto(photoIndex + 1);
+        } else {
+            showPhoto(photoIndex - 1);
+        }
+
+    }
+
+}, { passive: true });
 
 
 /* =========================
@@ -434,36 +600,28 @@ function moveNoButton() {
 no.addEventListener("mouseenter", moveNoButton);
 
 no.addEventListener("touchstart", function(e) {
+
     e.preventDefault();
+
     moveNoButton();
+
 });
 
 no.addEventListener("click", moveNoButton);
 
 
 /* =========================
-   BUKA SURAT
+   SURAT
 ========================= */
 
 letterBtn.addEventListener("click", function() {
-
     letterOverlay.style.display = "flex";
-
 });
-
-
-/* =========================
-   TUTUP SURAT
-========================= */
 
 closeLetter.addEventListener("click", function() {
-
     letterOverlay.style.display = "none";
-
 });
 
-
-/* Klik area luar surat untuk menutup */
 letterOverlay.addEventListener("click", function(e) {
 
     if (e.target === letterOverlay) {
@@ -515,6 +673,7 @@ function createFlower() {
     setTimeout(() => {
         flower.remove();
     }, 9000);
+
 }
 
 </script>
