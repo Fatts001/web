@@ -1,128 +1,375 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pertanyaan</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Kamu 🌸</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            overflow: hidden;
-        }
+body {
+    margin: 0;
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.35), transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(255,150,200,.25), transparent 35%),
+        linear-gradient(135deg, #ffd6e7, #d8c8ff, #c8edff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        .container {
-            text-align: center;
-            padding: 25px;
-        }
+/* Background blur */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(3px);
+    pointer-events: none;
+}
 
-        h1 {
-            margin-bottom: 25px;
-        }
+/* Kartu */
+.card {
+    position: relative;
+    z-index: 10;
+    width: min(90%, 430px);
+    padding: 35px 25px;
+    text-align: center;
+    border-radius: 28px;
+    background: rgba(255,255,255,.42);
+    border: 1px solid rgba(255,255,255,.65);
+    box-shadow:
+        0 20px 60px rgba(90,60,100,.20),
+        inset 0 1px 0 rgba(255,255,255,.8);
+    backdrop-filter: blur(18px);
+    animation: cardIn .8s ease;
+}
 
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
+@keyframes cardIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
 
-        button {
-            border: none;
-            padding: 13px 28px;
-            border-radius: 10px;
-            font-size: 18px;
-            cursor: pointer;
-        }
+.emoji {
+    font-size: 55px;
+    animation: floating 2.5s ease-in-out infinite;
+}
 
-        #yes {
-            background: #4caf50;
-            color: white;
-        }
+@keyframes floating {
+    0%,100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
 
-        #no {
-            background: #f44336;
-            color: white;
-            position: relative;
-        }
+h1 {
+    margin: 12px 0 8px;
+    color: #5b3d67;
+    font-size: 30px;
+}
 
-        #photo {
-            display: none;
-            margin-top: 25px;
-        }
+p {
+    margin: 0 0 25px;
+    color: #765d7e;
+    font-size: 16px;
+}
 
-        #photo img {
-            width: 280px;
-            max-width: 90vw;
-            border-radius: 15px;
-        }
+/* Tombol */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
 
-        #message {
-            margin-top: 15px;
-            font-size: 20px;
-        }
-    </style>
+button {
+    border: none;
+    outline: none;
+    padding: 13px 28px;
+    border-radius: 999px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .25s;
+    box-shadow: 0 8px 20px rgba(0,0,0,.12);
+}
+
+#yes {
+    color: white;
+    background: linear-gradient(135deg, #ff6fae, #ff4f91);
+}
+
+#yes:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 25px rgba(255,79,145,.35);
+}
+
+#no {
+    color: white;
+    background: linear-gradient(135deg, #8e8e9d, #666675);
+}
+
+/* Foto */
+#result {
+    display: none;
+    margin-top: 25px;
+    animation: resultIn .8s ease;
+}
+
+@keyframes resultIn {
+    from {
+        opacity: 0;
+        transform: scale(.7) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.photo {
+    width: 100%;
+    max-width: 300px;
+    max-height: 330px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 5px solid rgba(255,255,255,.8);
+    box-shadow: 0 15px 35px rgba(80,50,80,.25);
+}
+
+.love-text {
+    margin-top: 15px;
+    color: #633d69;
+    font-size: 21px;
+    font-weight: bold;
+}
+
+/* Bunga */
+.flower {
+    position: fixed;
+    top: 110%;
+    z-index: 20;
+    pointer-events: none;
+    font-size: 25px;
+    animation: flowerFly linear forwards;
+}
+
+@keyframes flowerFly {
+    0% {
+        transform:
+            translateY(0)
+            translateX(0)
+            rotate(0deg)
+            scale(.6);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    50% {
+        transform:
+            translateY(-55vh)
+            translateX(var(--move))
+            rotate(180deg)
+            scale(1);
+    }
+
+    100% {
+        transform:
+            translateY(-125vh)
+            translateX(calc(var(--move) * -1))
+            rotate(360deg)
+            scale(.8);
+        opacity: 0;
+    }
+}
+
+/* Kelap-kelip */
+.sparkle {
+    position: fixed;
+    z-index: 1;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 12px white;
+    animation: sparkle 2s infinite ease-in-out;
+    opacity: .7;
+}
+
+@keyframes sparkle {
+    0%,100% {
+        transform: scale(.3);
+        opacity: .2;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+    .card {
+        padding: 30px 20px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    .emoji {
+        font-size: 48px;
+    }
+
+    button {
+        padding: 12px 24px;
+        font-size: 16px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <div class="container">
+<!-- Kelap-kelip background -->
+<div class="sparkle" style="left:10%;top:15%;animation-delay:.2s"></div>
+<div class="sparkle" style="left:80%;top:20%;animation-delay:.8s"></div>
+<div class="sparkle" style="left:25%;top:75%;animation-delay:1.2s"></div>
+<div class="sparkle" style="left:90%;top:70%;animation-delay:.5s"></div>
+<div class="sparkle" style="left:55%;top:10%;animation-delay:1.5s"></div>
 
-        <h1>Mau lihat fotonya? 👀</h1>
+<div class="card">
 
-        <div class="buttons">
-            <button id="yes">YA</button>
-            <button id="no">TIDAK</button>
-        </div>
+    <div class="emoji">🌸</div>
 
-        <div id="photo">
-            <img src="foto.jpg" alt="Foto">
-            <div id="message">Nih fotonya 😎</div>
-        </div>
+    <h1>Mau lihat sesuatu? 👀</h1>
 
+    <p>Jawab dengan jujur yaa...</p>
+
+    <div class="buttons">
+        <button id="yes">YA 💗</button>
+        <button id="no">TIDAK 🙈</button>
     </div>
 
-    <script>
-        const yes = document.getElementById("yes");
-        const no = document.getElementById("no");
-        const photo = document.getElementById("photo");
+    <div id="result">
+        <img src="foto.jpg" class="photo" alt="Foto">
 
-        // Tombol YA
-        yes.addEventListener("click", function () {
-            photo.style.display = "block";
-        });
+        <div class="love-text">
+            🌷 Nih buat kamu 🌷
+        </div>
+    </div>
 
-        // Tombol TIDAK kabur
-        no.addEventListener("mouseenter", function () {
-            pindahTombol();
-        });
+</div>
 
-        no.addEventListener("touchstart", function (e) {
-            e.preventDefault();
-            pindahTombol();
-        });
+<script>
 
-        function pindahTombol() {
-            const maxX = window.innerWidth - no.offsetWidth - 20;
-            const maxY = window.innerHeight - no.offsetHeight - 20;
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+const result = document.getElementById("result");
 
-            const x = Math.random() * maxX;
-            const y = Math.random() * maxY;
+/* Tombol YA */
+yes.addEventListener("click", function() {
 
-            no.style.position = "fixed";
-            no.style.left = x + "px";
-            no.style.top = y + "px";
-        }
-    </script>
+    result.style.display = "block";
+
+    // Sembunyikan tombol
+    yes.style.display = "none";
+    no.style.display = "none";
+
+    // Bikin bunga
+    for (let i = 0; i < 45; i++) {
+        setTimeout(createFlower, i * 80);
+    }
+});
+
+/* Tombol TIDAK kabur */
+function moveNoButton() {
+
+    const padding = 15;
+
+    const maxX = window.innerWidth - no.offsetWidth - padding;
+    const maxY = window.innerHeight - no.offsetHeight - padding;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    no.style.position = "fixed";
+    no.style.left = x + "px";
+    no.style.top = y + "px";
+
+    no.style.transition = ".15s";
+}
+
+/* Desktop */
+no.addEventListener("mouseenter", moveNoButton);
+
+/* HP */
+no.addEventListener("touchstart", function(e) {
+    e.preventDefault();
+    moveNoButton();
+});
+
+/* Klik juga */
+no.addEventListener("click", moveNoButton);
+
+
+/* Membuat bunga */
+function createFlower() {
+
+    const flowers = [
+        "🌸",
+        "🌷",
+        "🌹",
+        "🌺",
+        "🌼",
+        "💮",
+        "🪻"
+    ];
+
+    const flower = document.createElement("div");
+
+    flower.className = "flower";
+
+    flower.innerText =
+        flowers[Math.floor(Math.random() * flowers.length)];
+
+    flower.style.left =
+        Math.random() * 100 + "vw";
+
+    flower.style.fontSize =
+        (18 + Math.random() * 25) + "px";
+
+    flower.style.animationDuration =
+        (4 + Math.random() * 4) + "s";
+
+    flower.style.setProperty(
+        "--move",
+        (-120 + Math.random() * 240) + "px"
+    );
+
+    document.body.appendChild(flower);
+
+    setTimeout(() => {
+        flower.remove();
+    }, 9000);
+}
+
+</script>
 
 </body>
 </html>
